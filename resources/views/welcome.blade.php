@@ -18,7 +18,7 @@
                             <div class="">
                                 ${{$product->price}}
                             </div>
-                                <a href="{{route('index')}}" class="btn btn-success pull-right"  role="button">Add to cart</a>
+                                <a href="{{route('show',$product->id)}}" class="btn btn-success pull-right"  role="button">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -28,6 +28,7 @@
         </div>
 
         @endforeach
+        <div>{{$products->links("pagination::bootstrap-4")}}</div>
     </div>
 </div>
 @endsection
