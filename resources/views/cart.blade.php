@@ -7,11 +7,11 @@
         <table id="cart" class="table table-hover table-condensed">
             <thead>
             <tr>
-                <th style="width:50%">Product</th>
+                <th style="width:50%">Product Name</th>
                 <th style="width:10%">Price</th>
                 <th style="width:8%">Quantity</th>
                 <th style="width:22%" class="text-center">Subtotal</th>
-                <th style="width:10%"></th>
+                <th style="width:10%">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
             @foreach(session('cart') as $id => $details)
 
 
-                <tr>
+                <tr id="{{$id}}">
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-sm-3 hidden-xs"><img src="{{ $details['imagePath'] }}" width="100" height="100" class="img-responsive"/></div>
@@ -36,8 +36,8 @@
                     </td>
                     <td data-th="Subtotal" class="text-center">${{ $details['total_price']}}</td>
                     <td class="actions" data-th="">
-                        <button class="btn btn-info btn-sm update-cart" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
-                        <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
+                        <button class="btn btn-warning btn-sm" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-danger btn-sm remove" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
             @endforeach
@@ -60,3 +60,42 @@
 
 
 @endsection
+
+
+@section('scripts')
+<script type="text/javascript">
+
+    $(".update-cart").click(function (e) {
+       e.preventDefault();
+       var button = $(this);
+        $.ajax({
+           url: '{{ route('update') }}',
+           method: "patch",
+           data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("tr").find(".quantity").val()},
+           success: function (response) {
+               window.location.reload();
+           }
+        });
+    });
+    $(".remove").click(function (e) {
+
+        e.preventDefault();
+        var button = $(this);
+        if(confirm("Remove from cart?")) {
+            $.ajax({
+                url: '{{ route('remove') }}',
+                method: "delete",
+                data: {_token: '{{ csrf_token() }}', id: button.attr("data-id")},
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        }
+    });
+
+
+
+    </script>
+
+@endsection
+
