@@ -19,6 +19,8 @@ Route::get('/','ProductController@index')->name('index');
 Route::get('/product/{product}','ProductController@show')->name('show');
 Route::post('/product/{product}','ProductController@addToCart')->name('add');
 
+Route::get('/product','ProductController@cart')->name('cart');
+
 Route::get('/session','ProductController@session')->name('show');
 
 

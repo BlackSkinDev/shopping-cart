@@ -34,7 +34,7 @@ class ProductController extends Controller
             ];
             session()->put('cart', $cart);
             session()->put('grandPrice',$product->price);
-            session()->put('totalProducts',$request['quantity']);
+            session()->put('totalProducts',1);
 
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
@@ -60,16 +60,20 @@ class ProductController extends Controller
                 ];
                 session()->put('cart', $cart);
                 session()->put('grandPrice', session()->get('grandPrice') + $product->price);
-                session()->put('totalProducts',session()->get('totalProducts')+$request['quantity']);
+                session()->put('totalProducts',session()->get('totalProducts')+1);
                 session()->flash('success', 'Product added to cart successfully!');
                return redirect()->back();
             }
         }
      }
 
+     public function cart(){
+         return view('cart');
+     }
+
      public function session(){
-        //session()->flush();
-         dd(session()->all());
+        session()->flush();
+         //dd(session()->all());
 
      }
 
