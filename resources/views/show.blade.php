@@ -15,10 +15,10 @@
                     <p>{{$product->description}}</p>
                     <div class="clearfix">
                         <div class="price">
-                            <b>${{$product->price}}</b>
+                            Price:  <b>&#x20A6; {{$product->price}}</b>
                         </div>
                         <div class="mt-4">
-                            <input type="number" class="form-control" style="width: 250px"><br>
+                            <input type="number" class="form-control" style="width: 260px"><br>
                             <a href="{{route('show',$product->id)}}" class="btn btn-success pull-right mt-2"  role="button">Add to cart</a>
                         </div>
                     </div>
