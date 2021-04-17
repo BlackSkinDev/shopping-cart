@@ -18,8 +18,13 @@ Route::get('/','ProductController@index')->name('index');
 
 Route::get('/product/{product}','ProductController@show')->name('show');
 Route::post('/product/{product}','ProductController@addToCart')->name('add');
-
 Route::get('/product','ProductController@cart')->name('cart');
+
+Route::patch('/update', 'ProductController@update')->name('update');
+Route::delete('/remove', 'ProductController@remove')->name('remove');
+
+
+
 
 Route::get('/session','ProductController@session')->name('show');
 
