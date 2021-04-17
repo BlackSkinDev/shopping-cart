@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','ProductController@index')->name('index');
 
 Route::get('/product/{product}','ProductController@show')->name('show');
+Route::post('/product/{product}','ProductController@addToCart')->name('add');
+
+Route::get('/session','ProductController@session')->name('show');
+
 
 Auth::routes();
 

@@ -4,6 +4,9 @@
 <div class="container">
     <p>Welcome back..</p>
     <div class="products" style="margin-top:50px">
+        @if(Session::has('success'))
+            <div class="alert alert-success">{{Session::get('success')}}</div>
+        @endif
         <div class="row">
             <div class="col-md-6">
                 <img src="{{$product->imagePath}}" class="image-responsive" style="width: 400px;height:380px">
@@ -12,14 +15,17 @@
             <div class="col-md-6">
                 <div class="caption">
                     <h3>{{$product->title}}</h3>
-                    <p>{{$product->description}}</p>
+                    <p class="text-muted">{{$product->description}}</p>
                     <div class="clearfix">
                         <div class="price">
                             Price:  <b>&#x20A6; {{$product->price}}</b>
                         </div>
-                        <div class="mt-4">
-                            <input type="number" class="form-control" style="width: 260px"><br>
-                            <a href="{{route('show',$product->id)}}" class="btn btn-success pull-right mt-2"  role="button">Add to cart</a>
+                        <div style="margin-top: 20px">
+                            <form method="POST" action="{{route('add',$product->id)}}">
+                                @csrf
+                                <input type="number" name="quantity" class="form-control" style="width: 260px" required><br>
+                                <input type="submit" value="Add to cart" class="btn btn-success  mt-2">
+                            </form>
                         </div>
                     </div>
                 </div>
