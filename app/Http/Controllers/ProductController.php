@@ -39,7 +39,7 @@ class ProductController extends Controller
                     ]
             ];
             session()->put('cart', $cart);
-            session()->put('grandPrice',$product->price);
+            session()->put('grandPrice',$product->price  * $request['quantity']);
             session()->put('totalProducts',1);
 
             return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -87,12 +87,24 @@ class ProductController extends Controller
         }
     }
 
+    public function update(Request $request){
+        if($request->id and $request->quantity)
+        {
+            $cart = session()->get('cart');
+            session()->put('grandPrice', (session()->get('grandPrice')- $cart[$request->id]['total_price']) + ($cart[$request->id]['price'] * $request['quantity']));
+           $cart[$request->id]["quantity"]= $request->quantity;
+            $cart[$request->id]['total_price']=$request['quantity'] * $cart[$request->id]['price'];
+            session()->put('cart', $cart);
+            session()->flash('success', 'Cart updated successfully');
+        }
+    }
+
 
 
 
      public function session(){
-        //session()->flush();
-         dd(session()->all());
+        session()->flush();
+         //dd(session()->all());
 
      }
 

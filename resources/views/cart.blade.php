@@ -36,7 +36,7 @@
                     </td>
                     <td data-th="Subtotal" class="text-center">${{ $details['total_price']}}</td>
                     <td class="actions" data-th="">
-                        <button class="btn btn-warning btn-sm" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
+                        <button class="btn btn-warning btn-sm update" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm remove" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
                     </td>
                 </tr>
@@ -65,14 +65,15 @@
 @section('scripts')
 <script type="text/javascript">
 
-    $(".update-cart").click(function (e) {
+    $(".update").click(function (e) {
        e.preventDefault();
        var button = $(this);
         $.ajax({
            url: '{{ route('update') }}',
            method: "patch",
-           data: {_token: '{{ csrf_token() }}', id: ele.attr("data-id"), quantity: ele.parents("tr").find(".quantity").val()},
+           data: {_token: '{{ csrf_token() }}', id: button.attr("data-id"), quantity: button.parents("tr").find(".quantity").val()},
            success: function (response) {
+               //console.log(response)
                window.location.reload();
            }
         });
