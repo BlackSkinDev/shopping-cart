@@ -29,10 +29,10 @@
                         @if(Auth::check())
                             <li><a href="{{ route('index') }}">User Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('index') }}">Logout</a></li>
+                            <li><a href="{{ route('signout') }}">Logout</a></li>
                         @else
-                            <li><a href="{{ route('index') }}">Signup</a></li>
-                            <li><a href="{{ route('index') }}">Signin</a></li>
+                            <li><a href="{{ route('register') }}">Signup</a></li>
+                            <li><a href="{{ route('login') }}">Signin</a></li>
                         @endif
                     </ul>
                 </li>

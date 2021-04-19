@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Unicodeveloper\Paystack\Paystack;
+
 
 class ProductController extends Controller
 {
+
+    public $paystack;
+
+    public function __construct()
+    {
+        $this->paystack = new Paystack();
+    }
+
     public function index(){
     	$products = Product::paginate(9);
     	return view('welcome',['products'=>$products]);
@@ -97,6 +109,33 @@ class ProductController extends Controller
             session()->put('cart', $cart);
             session()->flash('success', 'Cart updated successfully');
         }
+    }
+
+
+    public function checkout(){
+        return view('checkout');
+    }
+
+    public function redirectToGateway(Request $request)
+    {
+        try{
+            $request['metadata']=json_encode($array = ['address' => $request['address'],]);
+            $request['amount']=session()->get('grandPrice')*100;
+            return $this->paystack->getAuthorizationUrl()->redirectNow();
+        }
+        catch(\Exception $e) {
+            Session::flash('error',$e->getMessage());
+            return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
+        }
+    }
+
+    public function handleGatewayCallback()
+    {
+
+
+        $paymentDetails = $this->paystack->getPaymentData();
+        return $paymentDetails['data']['amount'] /100;
+        dd($paymentDetails);
     }
 
 

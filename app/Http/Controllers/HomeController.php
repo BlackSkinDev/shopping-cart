@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(session()->get('route')  ){
+            return redirect()->route('checkout');
+        }
+        return redirect('/');
     }
 }

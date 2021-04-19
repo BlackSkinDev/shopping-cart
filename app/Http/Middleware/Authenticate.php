@@ -14,6 +14,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        if($request->route()->getName()=='checkout'){
+            $route=$request->route()->getName();
+            session()->put('route',$route);
+            return route('login');
+        }
         if (! $request->expectsJson()) {
             return route('login');
         }

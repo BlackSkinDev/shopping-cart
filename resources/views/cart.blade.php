@@ -49,7 +49,7 @@
         </tr>
         <tr>
             <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-            <td colspan="2" class="hidden-xs"></td>
+            <td colspan="2" class="hidden-xs"><a href="{{ route('checkout') }}" class="btn btn-success"> Checkout  <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i></a></td>
             <td class="hidden-xs text-center"><strong>Total ${{ session('grandPrice') }}</strong></td>
         </tr>
         </tfoot>
