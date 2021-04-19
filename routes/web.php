@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pay', 'ProductController@redirectToGateway')->name('pay');
     Route::get('/callback', 'ProductController@handleGatewayCallback')->name('callback');
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout'])->name('signout');
-
+    Route::get('/order','ProductController@order')->name('order');
 });
 
 

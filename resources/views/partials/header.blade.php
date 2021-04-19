@@ -27,7 +27,7 @@
                                 class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @if(Auth::check())
-                            <li><a href="{{ route('index') }}">User Profile</a></li>
+                            <li><a href="{{ route('order') }}">My Orders</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('signout') }}">Logout</a></li>
                         @else

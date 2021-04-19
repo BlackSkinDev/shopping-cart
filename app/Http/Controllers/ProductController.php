@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Unicodeveloper\Paystack\Paystack;
@@ -131,19 +133,47 @@ class ProductController extends Controller
 
     public function handleGatewayCallback()
     {
-
-
         $paymentDetails = $this->paystack->getPaymentData();
-        return $paymentDetails['data']['amount'] /100;
-        dd($paymentDetails);
+        $cart= session()->get('cart');
+        Auth::user()->orders()->create([
+            'cart'=>serialize($cart),
+            'address'=>$paymentDetails['data']['metadata']['address'],
+            'name'=>Auth::user()->name,
+            'amount'=>$paymentDetails['data']['amount'] /100,
+            'payment_id'=>$paymentDetails['data']['reference'],
+        ]);
+        session()->forget('grandPrice');
+        session()->forget('totalProducts');
+        session()->forget('cart');
+        return redirect()->route('index');
     }
 
 
+    public function order(){
+
+        $orders= Auth::user()->orders()->get();
+        $orders->each(function($order, $key) {
+            $order->cart = unserialize($order->cart);
+            return $order;
+        });
+
+        return view('orders',compact('orders'));
+        //    foreach($orders as $order){
+        //        echo $order->name . "<br>";
+        //         foreach($order->cart as $item){
+        //             echo $item['quantity']."<br>";
+        //         }
+        //    }
+
+    }
 
 
-     public function session(){
+    public function session(){
         session()->flush();
-         //dd(session()->all());
+        //dd(session()->all());
+
+
+
 
      }
 

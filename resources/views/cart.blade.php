@@ -68,15 +68,22 @@
     $(".update").click(function (e) {
        e.preventDefault();
        var button = $(this);
-        $.ajax({
-           url: '{{ route('update') }}',
-           method: "patch",
-           data: {_token: '{{ csrf_token() }}', id: button.attr("data-id"), quantity: button.parents("tr").find(".quantity").val()},
-           success: function (response) {
-               //console.log(response)
-               window.location.reload();
-           }
-        });
+
+        if(button.parents("tr").find(".quantity").val()==0){
+            alert("Qunatity cannot be 0")
+        }
+        else{
+            $.ajax({
+                url: '{{ route('update') }}',
+                method: "patch",
+                data: {_token: '{{ csrf_token() }}', id: button.attr("data-id"), quantity: button.parents("tr").find(".quantity").val()},
+                success: function (response) {
+                    //console.log(response)
+                    window.location.reload();
+                }
+            });
+        }
+
     });
     $(".remove").click(function (e) {
 
