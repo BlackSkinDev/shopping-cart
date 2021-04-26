@@ -18,7 +18,10 @@
                 <li>
                     <a href="{{ route('cart') }}">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
-                        <span class="badge">{{ Session::has('totalProducts') ? Session::get('totalProducts') : '0' }}</span>
+                        @if(Session::has('totalProducts'))
+                            <span class="badge">{{ Session::get('totalProducts') }}</span>
+                        
+                        @endif
                     </a>
                 </li>
                 <li class="dropdown">

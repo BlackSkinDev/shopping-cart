@@ -151,31 +151,17 @@ class ProductController extends Controller
 
     public function order(){
 
-        $orders= Auth::user()->orders()->get();
+        $orders= Auth::user()->orders()->orderBy('id', 'desc')->get();
         $orders->each(function($order, $key) {
             $order->cart = unserialize($order->cart);
             return $order;
         });
 
         return view('orders',compact('orders'));
-        //    foreach($orders as $order){
-        //        echo $order->name . "<br>";
-        //         foreach($order->cart as $item){
-        //             echo $item['quantity']."<br>";
-        //         }
-        //    }
 
     }
 
 
-    public function session(){
-        session()->flush();
-        //dd(session()->all());
-
-
-
-
-     }
 
 }
 

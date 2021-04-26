@@ -30,11 +30,11 @@
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price">${{ $details['price'] }}</td>
+                    <td data-th="Price">&#x20A6;{{ $details['price'] }}</td>
                     <td data-th="Quantity">
                         <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity" />
                     </td>
-                    <td data-th="Subtotal" class="text-center">${{ $details['total_price']}}</td>
+                    <td data-th="Subtotal" class="text-center">&#x20A6;{{ $details['total_price']}}</td>
                     <td class="actions" data-th="">
                         <button class="btn btn-warning btn-sm update" data-id="{{ $id }}"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm remove" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
@@ -50,7 +50,7 @@
         <tr>
             <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
             <td colspan="2" class="hidden-xs"><a href="{{ route('checkout') }}" class="btn btn-success"> Checkout  <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i></a></td>
-            <td class="hidden-xs text-center"><strong>Total ${{ session('grandPrice') }}</strong></td>
+            <td class="hidden-xs text-center"><strong>Total &#x20A6;{{ session('grandPrice') }}</strong></td>
         </tr>
         </tfoot>
     </table>
